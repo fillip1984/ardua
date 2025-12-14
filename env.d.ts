@@ -14,6 +14,10 @@ declare global {
     interface ProcessEnv {
       readonly DATABASE_URL: string
       readonly DATABASE_SCHEMA: string
+      readonly BETTER_AUTH_SECRET: string
+      readonly BETTER_AUTH_GOOGLE_ID: string
+      readonly BETTER_AUTH_GOOGLE_SECRET: string
+      readonly BETTER_AUTH_URL: string
       readonly NODE_ENV: 'development' | 'production' | 'test'
     }
   }

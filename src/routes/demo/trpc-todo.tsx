@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useTRPC } from '@/integrations/trpc/react'
+import { Trash } from 'lucide-react'
 
 export const Route = createFileRoute('/demo/trpc-todo')({
   component: TRPCTodos,
@@ -26,12 +27,19 @@ function TRPCTodos() {
   })
 
   const submitTodo = useCallback(() => {
-    addTodo({ name: todo })
+    addTodo({ title: todo })
   }, [addTodo, todo])
+
+  const { mutate: deleteTodo } = useMutation({
+    ...trpc.todos.remove.mutationOptions(),
+    onSuccess: () => {
+      refetch()
+    },
+  })
 
   return (
     <div
-      className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4 text-white"
+      className="flex items-center justify-center min-h-screen bg-linear-to-br from-purple-100 to-blue-100 p-4 text-white"
       style={{
         backgroundImage:
           'radial-gradient(50% 50% at 95% 5%, #4a90c2 0%, #317eb9 50%, #1e4d72 100%)',
@@ -43,9 +51,13 @@ function TRPCTodos() {
           {data?.map((t) => (
             <li
               key={t.id}
-              className="bg-white/10 border border-white/20 rounded-lg p-3 backdrop-blur-sm shadow-md"
+              className="bg-white/10 border border-white/20 rounded-lg p-3 backdrop-blur-sm shadow-md flex justify-between items-center"
             >
-              <span className="text-lg text-white">{t.name}</span>
+              <span className="text-lg text-white">{t.title}</span>
+              <Trash
+                onClick={() => deleteTodo({ id: t.id })}
+                className="text-destructive"
+              />
             </li>
           ))}
         </ul>
