@@ -1,8 +1,8 @@
 import { db } from '@/db'
 import { initTRPC, TRPCError } from '@trpc/server'
+import { Auth } from 'better-auth/types'
 import superjson from 'superjson'
 import z, { ZodError } from 'zod/v4'
-import { Auth } from '../better-auth'
 
 /**
  * 1. CONTEXT

@@ -2,7 +2,7 @@ import { createFileRoute, useRouter } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '@/db'
 import { desc } from 'drizzle-orm'
-import { todos } from '@/db/schema'
+import { todos } from '@/db/schema/schema'
 
 const getTodos = createServerFn({
   method: 'GET',

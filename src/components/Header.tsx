@@ -1,10 +1,18 @@
+import { authClient } from '@/lib/auth-client'
 import { Link } from '@tanstack/react-router'
 
 import { Database, Home, Menu, Network, X } from 'lucide-react'
 import { useState } from 'react'
+import { Button } from './ui/button'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const { data: session } = authClient.useSession()
+
+  const handleLogout = async () => {
+    console.log('Logging out...')
+    await authClient.signOut()
+  }
 
   return (
     <>
@@ -25,6 +33,9 @@ export default function Header() {
             />
           </Link>
         </h1>
+        <div className="ml-auto">
+          {session?.user && <Button onClick={handleLogout}>Log out</Button>}
+        </div>
       </header>
 
       <aside

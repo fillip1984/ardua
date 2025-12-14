@@ -3,7 +3,7 @@ import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
 import { trpcRouter } from '@/integrations/trpc/router'
 import { createFileRoute } from '@tanstack/react-router'
 import { createTRPCContext } from '@/integrations/trpc/init'
-import { auth } from '@/integrations/better-auth/server'
+import { auth } from '@/lib/auth'
 
 config()
 

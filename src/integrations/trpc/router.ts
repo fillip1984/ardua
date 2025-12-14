@@ -1,16 +1,10 @@
 import { z } from 'zod'
 
-import { createTRPCRouter, publicProcedure } from './init'
+import { createTRPCRouter, protectedProcedure, publicProcedure } from './init'
 
-import { todos } from '@/db/schema'
+import { todos } from '@/db/schema/schema'
 import type { TRPCRouterRecord } from '@trpc/server'
 import { eq } from 'drizzle-orm/sql/expressions/conditions'
-
-// const todos = [
-//   { id: 1, name: 'Get groceries' },
-//   { id: 2, name: 'Buy a new phone' },
-//   { id: 3, name: 'Finish the project' },
-// ]
 
 const todosRouter = {
   list: publicProcedure.query(async ({ ctx }) => ctx.db.select().from(todos)),
@@ -24,6 +18,9 @@ const todosRouter = {
     .mutation(async ({ input, ctx }) => {
       return await ctx.db.delete(todos).where(eq(todos.id, input.id))
     }),
+  // testSecure: protectedProcedure.query(async ({ ctx }) => {
+  //   console.log({ ctx:ctx.session.user. })
+  // }),
 } satisfies TRPCRouterRecord
 
 export const trpcRouter = createTRPCRouter({

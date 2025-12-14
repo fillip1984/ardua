@@ -8,6 +8,13 @@
       "when": 1765740083129,
       "tag": "0000_lucky_tyrannus",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1765751573443,
+      "tag": "0001_nifty_paibok",
+      "breakpoints": true
     }
   ]
 }

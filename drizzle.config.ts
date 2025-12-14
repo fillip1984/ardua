@@ -5,7 +5,7 @@ config()
 
 export default defineConfig({
   out: './drizzle',
-  schema: './src/db/schema.ts',
+  schema: './src/db/schema/*.ts',
   dialect: 'postgresql',
   schemaFilter: [process.env.DATABASE_SCHEMA],
   dbCredentials: {
