@@ -1,22 +1,30 @@
 import { z } from 'zod'
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from './init'
+import { createTRPCRouter, protectedProcedure } from './init'
 
 import { todos } from '@/db/schema/schema'
 import type { TRPCRouterRecord } from '@trpc/server'
-import { eq } from 'drizzle-orm/sql/expressions/conditions'
+import { and, eq } from 'drizzle-orm/sql/expressions/conditions'
 
 const todosRouter = {
-  list: publicProcedure.query(async ({ ctx }) => ctx.db.select().from(todos)),
-  add: publicProcedure
+  list: protectedProcedure.query(async ({ ctx }) =>
+    ctx.db.select().from(todos).where(eq(todos.userId, ctx.session.user.id)),
+  ),
+  add: protectedProcedure
     .input(z.object({ title: z.string() }))
     .mutation(async ({ input, ctx }) => {
-      return await ctx.db.insert(todos).values({ title: input.title })
+      return await ctx.db
+        .insert(todos)
+        .values({ title: input.title, userId: ctx.session.user.id })
     }),
-  remove: publicProcedure
+  remove: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ input, ctx }) => {
-      return await ctx.db.delete(todos).where(eq(todos.id, input.id))
+      return await ctx.db
+        .delete(todos)
+        .where(
+          and(eq(todos.id, input.id), eq(todos.userId, ctx.session.user.id)),
+        )
     }),
   // testSecure: protectedProcedure.query(async ({ ctx }) => {
   //   console.log({ ctx:ctx.session.user. })

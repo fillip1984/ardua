@@ -20,7 +20,7 @@ export function SignIn() {
       <CardContent>
         <Button
           variant="outline"
-          onClick={() => authClient.signIn({})}
+          onClick={() => authClient.signIn.social({ provider: 'google' })}
           className="w-full"
         >
           Login with Google

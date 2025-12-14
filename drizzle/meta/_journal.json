@@ -15,6 +15,13 @@
       "when": 1765751573443,
       "tag": "0001_nifty_paibok",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1765754941904,
+      "tag": "0002_sharp_hex",
+      "breakpoints": true
     }
   ]
 }
